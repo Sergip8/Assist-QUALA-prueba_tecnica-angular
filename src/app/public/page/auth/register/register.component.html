@@ -1,0 +1,71 @@
+<div class="login-container">
+  <div class="login-card">
+    <!-- Logo Section -->
+    <div class="logo-section">
+      <div class="logo">
+        <i nz-icon nzType="bank" class="logo-icon"></i>
+        <h1>QUALA</h1>
+      </div>
+      <p class="subtitle">Sistema de Gestión de Sucursales</p>
+    </div>
+
+    <!-- Register Form -->
+    <form nz-form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="login-form">
+      <h2 class="form-title">Crear Cuenta</h2>
+
+      <!-- Name Field -->
+      <nz-form-item>
+        <nz-form-control nzErrorTip="Por favor ingresa tu nombre">
+          <nz-input-group nzPrefixIcon="user">
+            <input  class="ant-input" nz-input formControlName="userName" placeholder="Nombre de Usuario" autocomplete="userName" />
+          </nz-input-group>
+        </nz-form-control>
+      </nz-form-item>
+
+      <!-- Email Field -->
+      <nz-form-item>
+        <nz-form-control nzErrorTip="Por favor ingresa un email válido">
+          <nz-input-group nzPrefixIcon="mail">
+            <input  class="ant-input" nz-input type="email" formControlName="email" placeholder="Email" autocomplete="email" />
+          </nz-input-group>
+        </nz-form-control>
+      </nz-form-item>
+
+      <!-- Password Field -->
+      <nz-form-item>
+        <nz-form-control nzErrorTip="Mínimo 6 caracteres">
+          <nz-input-group nzPrefixIcon="lock" class="password-input">
+            <input  class="ant-input" nz-input [type]="passwordVisible ? 'text' : 'password'" formControlName="password" placeholder="Contraseña" autocomplete="new-password" />
+            <i nz-icon [nzType]="passwordVisible ? 'eye-invisible' : 'eye'" nzSuffix (click)="passwordVisible = !passwordVisible" class="password-toggle icon-set"></i>
+          </nz-input-group>
+        </nz-form-control>
+      </nz-form-item>
+
+      <!-- Confirm Password Field -->
+      <nz-form-item *ngIf="registerForm.hasError('mismatch')">
+        <nz-form-control nzErrorTip="Las contraseñas no coinciden">
+          <nz-input-group nzPrefixIcon="lock" class="password-input">
+            <input  class="ant-input" nz-input [type]="confirmPasswordVisible ? 'text' : 'password'" formControlName="confirmPassword" placeholder="Confirmar contraseña" autocomplete="new-password" />
+            <i nz-icon [nzType]="confirmPasswordVisible ? 'eye-invisible' : 'eye'" nzSuffix (click)="confirmPasswordVisible = !confirmPasswordVisible" class="password-toggle icon-set"></i>
+          </nz-input-group>
+        </nz-form-control>
+      </nz-form-item>
+
+      <!-- Register Button -->
+      <nz-form-item>
+        <nz-form-control>
+          <button nz-button nzType="primary" nzSize="large" [nzLoading]="loading" [disabled]="!registerForm.valid" class="login-button">
+            <i nz-icon nzType="user-add"></i>
+            Registrarse
+          </button>
+        </nz-form-control>
+      </nz-form-item>
+
+      <!-- Login Link -->
+      <div class="register-link">
+        <span>¿Ya tienes una cuenta?</span>
+        <a (click)="navigateToLogin()" class="link">Inicia sesión</a>
+      </div>
+    </form>
+  </div>
+</div>

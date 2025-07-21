@@ -1,0 +1,180 @@
+ .header-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      background: var(--dark);
+      border-bottom: 1px solid var(--gray);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+      padding: 0;
+      line-height: 64px;
+      height: 64px;
+    }
+
+    .header-content {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      max-width: 1200px;
+      margin: 0 auto;
+      height: 100%;
+      padding: 0 24px;
+    }
+
+    .logo-section {
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      transition: opacity 0.3s ease;
+    }
+
+    .logo-section:hover {
+      opacity: 0.8;
+    }
+
+    .logo-icon {
+      font-size: 24px;
+      color: var(--primary);
+      margin-right: 12px;
+    }
+
+    .logo-text {
+      color: var(--white);
+      font-size: 20px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+
+    .nav-section {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+    }
+
+    .main-menu {
+      background: transparent !important;
+      border: none !important;
+      line-height: 64px;
+    }
+
+    .main-menu .ant-menu-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--white);
+      margin: 0 16px;
+    }
+
+    .main-menu .ant-menu-item:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+      color: var(--primary);
+    }
+
+    .main-menu .ant-menu-item-selected {
+      background-color: rgba(0, 123, 255, 0.2);
+      color: var(--primary);
+    }
+
+    .user-section {
+      display: flex;
+      align-items: center;
+    }
+
+    .auth-buttons {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .auth-buttons button {
+      height: 36px;
+      border-radius: 6px;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .auth-buttons button[nzType="default"] {
+      border-color: var(--secondary);
+      color: var(--white);
+      background-color: transparent;
+    }
+
+    .auth-buttons button[nzType="default"]:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+      background-color: rgba(0, 123, 255, 0.1);
+    }
+
+    .auth-buttons button[nzType="primary"] {
+      background-color: var(--primary);
+      border-color: var(--primary);
+      color: var(--white);
+    }
+
+    .auth-buttons button[nzType="primary"]:hover {
+      background-color: var(--blue);
+      border-color: var(--blue);
+      transform: translateY(-1px);
+    }
+
+    .user-logged {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: var(--white);
+    }
+
+    .user-name {
+      font-weight: 500;
+      color: var(--white);
+    }
+
+    .user-logged button {
+      color: var(--white);
+      transition: all 0.3s ease;
+    }
+
+    .user-logged button:hover {
+      color: var(--danger);
+      background-color: rgba(220, 53, 69, 0.1);
+    }
+
+    @media (max-width: 768px) {
+      .header-content {
+        padding: 0 16px;
+      }
+      
+      .logo-text {
+        display: none;
+      }
+      
+      .nav-section {
+        display: none;
+      }
+      
+      .auth-buttons {
+        gap: 8px;
+      }
+      
+      .auth-buttons button span {
+        display: none;
+      }
+      
+      .user-name {
+        display: none;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .header-content {
+        padding: 0 12px;
+      }
+      
+      .auth-buttons button {
+        padding: 0 8px;
+        min-width: 36px;
+      }
+    }

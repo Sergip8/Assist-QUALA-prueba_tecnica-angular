@@ -1,0 +1,101 @@
+ ::ng-deep .modal-right .ant-modal {
+     position: fixed;
+  right: 0;
+  top: 0;
+  margin: 0;
+  height: 100vh;
+  width: auto;
+  max-width: 20%;
+  border-radius: 0;
+ 
+    }
+
+    ::ng-deep .modal-right .ant-modal-content {
+      height: 100%;
+      border-radius: 0;
+      display: flex;
+      flex-direction: column;
+    }
+
+    ::ng-deep .modal-right .ant-modal-body {
+      flex: 1;
+      overflow-y: auto;
+      padding: 24px;
+    }
+
+    ::ng-deep .modal-right .ant-modal-header {
+      flex-shrink: 0;
+      border-radius: 0;
+    }
+
+    ::ng-deep .modal-right .ant-modal-footer {
+      flex-shrink: 0;
+      border-radius: 0;
+    }
+
+    /* Modal central */
+    ::ng-deep .modal-center .ant-modal-content {
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    /* Variantes de color para el cuerpo del modal */
+    .modal-body {
+      min-height: 100px;
+      height: 95%;
+    }
+
+
+
+    /* Botones con variantes */
+    ::ng-deep .btn-primary .ant-btn-primary {
+      background-color: var(--primary);
+      border-color: var(--primary);
+    }
+
+    ::ng-deep .btn-success .ant-btn-primary {
+      background-color: var(--success);
+      border-color: var(--success);
+    }
+
+    ::ng-deep .btn-danger .ant-btn-primary {
+      background-color: var(--danger);
+      border-color: var(--danger);
+    }
+
+    ::ng-deep .btn-warning .ant-btn-primary {
+      background-color: var(--warning);
+      border-color: var(--warning);
+      color: var(--dark);
+    }
+
+    ::ng-deep .btn-info .ant-btn-primary {
+      background-color: var(--info);
+      border-color: var(--info);
+    }
+
+    ::ng-deep .btn-secondary .ant-btn-primary {
+      background-color: var(--secondary);
+      border-color: var(--secondary);
+    }
+
+    ::ng-deep .btn-dark .ant-btn-primary {
+      background-color: var(--dark);
+      border-color: var(--dark);
+    }
+
+    /* Footer personalizado */
+    .modal-footer {
+      display: flex;
+      justify-content: flex-end;
+      gap: 8px;
+    }
+
+    /* Animaciones suaves */
+    ::ng-deep .modal-right .ant-modal {
+      animation-duration: 0.3s;
+    }
+
+    ::ng-deep .modal-center .ant-modal {
+      animation-duration: 0.3s;
+    }

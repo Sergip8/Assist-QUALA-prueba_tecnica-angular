@@ -1,0 +1,44 @@
+ <nz-modal
+      [nzVisible]="visible"
+      [nzTitle]="title"
+      [nzFooter]="footerTemplate"
+      [nzWidth]="getModalWidth()"
+      [nzWrapClassName]="getWrapClass()"
+      [nzClosable]="closable"
+      [nzMaskClosable]="maskClosable"
+      [nzCentered]="mode === 'center'"
+      (nzOnCancel)="handleCancel()"
+      (nzOnOk)="handleOk()"
+    >
+      <ng-container *nzModalContent>
+        <div class="modal-body" [ngClass]="'modal-' + variant">
+          <ng-content></ng-content>
+          <ng-container *ngTemplateOutlet="contentTemplate || null"></ng-container>
+        </div>
+      </ng-container>
+
+      <!-- Footer template -->
+      <ng-template #footerTemplate>
+        <div class="modal-footer" *ngIf="showFooter">
+          <button 
+            *ngIf="showCancelButton"
+            nz-button 
+            [nzType]="'default'" 
+            (click)="handleCancel()"
+            [nzLoading]="cancelLoading"
+          >
+            {{ cancelText }}
+          </button>
+          <button 
+            *ngIf="showOkButton"
+            nz-button 
+            [nzType]="'primary'" 
+            (click)="handleOk()"
+            [nzLoading]="okLoading"
+            [ngClass]="'btn-' + variant"
+          >
+            {{ okText }}
+          </button>
+        </div>
+      </ng-template>
+    </nz-modal>

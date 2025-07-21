@@ -1,0 +1,416 @@
+.dashboard-container {
+  padding: 16px;
+  background-color: var(--light);
+  min-height: 100vh;
+  box-sizing: border-box; /* Asegura que el padding no añada al ancho total */
+}
+
+/* Header */
+.site-page-header {
+  background: var(--white);
+  border-radius: 8px;
+  margin-bottom: 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  padding: 16px; /* Ajuste para el padding interno */
+}
+
+/* Estadísticas Principales */
+.main-stats {
+  margin-bottom: 24px;
+}
+
+.stat-card {
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  border: none;
+  height: 100%; /* Asegura que todas las tarjetas tengan la misma altura */
+  display: flex; /* Para centrar el contenido verticalmente si es necesario */
+  align-items: center; /* Centra el contenido verticalmente */
+  justify-content: center; /* Centra el contenido horizontalmente */
+  padding: 16px; /* Padding para el contenido de la tarjeta */
+}
+
+.stat-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+.stat-content {
+  display: flex;
+  align-items: center;
+  width: 100%; /* Asegura que el contenido ocupe todo el ancho */
+}
+
+.stat-icon {
+  font-size: 36px;
+  margin-right: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  color: var(--white);
+  flex-shrink: 0; /* Evita que el icono se encoja */
+}
+
+.stat-details {
+  flex: 1;
+  min-width: 0; /* Previene el desbordamiento de texto largo */
+}
+
+.stat-value {
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 4px;
+  word-wrap: break-word; /* Rompe palabras largas */
+}
+
+.stat-title {
+  font-size: 14px;
+  color: var(--gray);
+  font-weight: 500;
+  word-wrap: break-word; /* Rompe palabras largas */
+}
+
+/* Colores de las tarjetas de estadísticas - Sin cambios */
+.stat-card-primary .stat-icon { background: linear-gradient(135deg, var(--primary), var(--blue)); }
+.stat-card-primary .stat-value { color: var(--primary); }
+.stat-card-success .stat-icon { background: linear-gradient(135deg, var(--success), var(--green)); }
+.stat-card-success .stat-value { color: var(--success); }
+.stat-card-warning .stat-icon { background: linear-gradient(135deg, var(--warning), var(--orange)); }
+.stat-card-warning .stat-value { color: var(--warning); }
+.stat-card-info .stat-icon { background: linear-gradient(135deg, var(--info), var(--cyan)); }
+.stat-card-info .stat-value { color: var(--info); }
+.stat-card-danger .stat-icon { background: linear-gradient(135deg, var(--danger), var(--red)); }
+.stat-card-danger .stat-value { color: var(--danger); }
+
+/* Secciones de gráficos y tablas */
+.charts-section,
+.system-section,
+.tables-section,
+.report-info {
+  margin-bottom: 24px;
+}
+
+.chart-card, .info-card, .table-card {
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border: none;
+  height: 100%; /* Asegura que las tarjetas ocupen la misma altura en su fila */
+  padding: 16px; /* Añade padding interno a las tarjetas */
+}
+
+.chart-container {
+  padding: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 250px; /* Altura mínima para gráficos */
+}
+
+/* Información del sistema */
+.system-info {
+  padding: 8px 0;
+}
+
+.info-item {
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--light);
+}
+
+.info-item:last-child {
+  margin-bottom: 0;
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.info-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  flex-wrap: wrap; /* Permite que los elementos se envuelvan en pantallas pequeñas */
+}
+
+.info-category {
+  font-weight: 600;
+  font-size: 16px;
+  color: var(--dark);
+}
+
+.info-details {
+  margin-top: 8px;
+}
+
+.last-check {
+  font-size: 12px;
+  color: var(--gray);
+  margin-top: 8px;
+}
+
+/* Tablas */
+.table-card .ant-card-body {
+  padding: 0; /* El padding ya se maneja en .table-card */
+}
+
+.percentage-cell {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.success-text {
+  color: var(--success);
+  font-weight: 600;
+}
+
+.danger-text {
+  color: var(--danger);
+  font-weight: 600;
+}
+
+/* Footer del reporte */
+.report-info {
+  margin-bottom: 16px;
+}
+
+.info-footer {
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border: none;
+  padding: 16px; /* Ajuste del padding para el footer */
+}
+
+.report-details {
+  padding: 8px 0;
+}
+
+/* Media Queries para Responsividad */
+
+/* Pantallas muy grandes (Desktop Lg) */
+@media (min-width: 1400px) {
+  .dashboard-container {
+    padding: 24px;
+  }
+}
+
+/* Pantallas grandes (Desktop) */
+@media (max-width: 1200px) {
+  .main-stats .ant-col {
+    /* En pantallas un poco más pequeñas, las 4 columnas de stats se convierten en 2x2 */
+    flex: 0 0 50%;
+    max-width: 50%;
+    margin-bottom: 16px;
+  }
+}
+
+/* Pantallas medianas (Tablet) */
+@media (max-width: 992px) {
+  .dashboard-container {
+    padding: 12px;
+  }
+
+  /* Las secciones de gráficos y tablas se apilan verticalmente */
+  .charts-section .ant-col,
+  .system-section .ant-col,
+  .tables-section .ant-col {
+    flex: 0 0 100%;
+    max-width: 100%;
+    margin-bottom: 16px; /* Espacio entre columnas apiladas */
+  }
+
+  .stat-card .stat-content {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .stat-icon {
+    margin-right: 0;
+    margin-bottom: 12px;
+  }
+
+  .chart-container {
+    padding: 12px;
+    height: auto; /* Permite que la altura se ajuste al contenido del gráfico */
+    min-height: 200px; /* Ajuste la altura mínima si es necesario */
+  }
+
+  .site-page-header .ant-page-header-extra {
+    display: flex;
+    justify-content: center; /* Centra el botón de actualizar */
+    margin-top: 10px; /* Espacio si el título se envuelve */
+  }
+
+  /* Ajuste para la información del reporte en el footer */
+  .ant-descriptions[nzColumn="4"] {
+    display: block; /* Cada item en su propia línea */
+  }
+  .ant-descriptions-item {
+    margin-bottom: 10px; /* Espacio entre items */
+  }
+}
+
+/* Pantallas pequeñas (Móvil) */
+@media (max-width: 768px) {
+  .dashboard-container {
+    padding: 8px;
+  }
+
+  /* Todas las columnas se apilan verticalmente */
+  .main-stats .ant-col,
+  .charts-section .ant-col,
+  .system-section .ant-col,
+  .tables-section .ant-col {
+    flex: 0 0 100%;
+    max-width: 100%;
+    margin-bottom: 16px;
+  }
+
+  .stat-value {
+    font-size: 24px;
+  }
+
+  .stat-title {
+    font-size: 13px;
+  }
+
+  .stat-icon {
+    font-size: 28px;
+    width: 50px;
+    height: 50px;
+  }
+
+  .chart-container {
+    padding: 8px;
+    min-height: 180px; /* Ajuste para móviles */
+  }
+
+  .site-page-header {
+    padding: 12px;
+  }
+
+  .ant-page-header-title,
+  .ant-page-header-subtitle {
+    font-size: 1.1em; /* Ajuste de tamaño de fuente para el encabezado */
+    text-align: center;
+  }
+
+  .ant-page-header-extra {
+    margin-top: 8px; /* Reduce el margen en móvil */
+  }
+
+  .ant-table-wrapper {
+    overflow-x: auto; /* Permite desplazamiento horizontal en tablas */
+  }
+
+  .ant-table {
+    width: 100%; /* Asegura que la tabla ocupe el 100% del ancho */
+    min-width: 500px; /* Anchura mínima para evitar que la tabla se vea demasiado pequeña */
+  }
+
+  .ant-descriptions-item-label,
+  .ant-descriptions-item-content {
+    display: block; /* Etiqueta y contenido en líneas separadas */
+    width: 100%;
+    text-align: center;
+  }
+}
+
+/* Pantallas muy pequeñas (Móvil Xs) */
+@media (max-width: 480px) {
+  .dashboard-container {
+    padding: 4px;
+  }
+
+  .stat-card {
+    padding: 12px;
+  }
+
+  .stat-value {
+    font-size: 22px;
+  }
+
+  .stat-title {
+    font-size: 12px;
+  }
+
+  .stat-icon {
+    font-size: 24px;
+    width: 45px;
+    height: 45px;
+  }
+
+  .chart-container {
+    min-height: 150px;
+  }
+
+  .site-page-header {
+    padding: 8px;
+  }
+
+  .ant-descriptions-title {
+    font-size: 16px;
+    text-align: center;
+  }
+}
+
+/* Animaciones - Sin cambios */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.stat-card,
+.chart-card,
+.info-card,
+.table-card {
+  animation: fadeInUp 0.5s ease-out;
+}
+
+.stat-card:nth-child(1) { animation-delay: 0.1s; }
+.stat-card:nth-child(2) { animation-delay: 0.2s; }
+.stat-card:nth-child(3) { animation-delay: 0.3s; }
+.stat-card:nth-child(4) { animation-delay: 0.4s; }
+
+/* Mejoras adicionales para las tablas */
+.ant-table-thead > tr > th {
+  background-color: var(--light);
+  color: var(--dark);
+  font-weight: 600;
+  border-bottom: 2px solid var(--primary);
+  white-space: nowrap; /* Evita que los encabezados de tabla se envuelvan */
+}
+
+.ant-table-tbody > tr > td {
+  padding: 12px 16px;
+}
+
+.ant-table-tbody > tr:hover > td {
+  background-color: rgba(0, 123, 255, 0.05);
+}
+
+/* Personalización de componentes ng-zorro */
+.ant-progress-line { margin: 4px 0; }
+.ant-tag { border-radius: 6px; font-weight: 500; }
+.ant-card-head-title { color: var(--dark); font-weight: 600; font-size: 16px; }
+.ant-descriptions-title { color: var(--dark); font-weight: 600; font-size: 18px; margin-bottom: 16px; }
+.ant-descriptions-item-label { color: var(--gray-dark); font-weight: 600; }
+
+/* Estilos para los botones */
+.ant-btn-primary { background-color: var(--primary); border-color: var(--primary); }
+.ant-btn-primary:hover, .ant-btn-primary:focus { background-color: var(--blue); border-color: var(--blue); }
+
+/* Mejoras para el diseño de progreso */
+.ant-progress-success-bg, .ant-progress-bg { border-radius: 4px; }
+
+/* Estilos para alertas si las necesitas */
+.ant-alert { border-radius: 8px; margin-bottom: 16px; }
+
+/* Espaciado adicional */
+/* Elimina el padding del body de la tarjeta aquí, ya se agregó al .chart-card, .info-card, .table-card */
+/* .ant-card-body { padding: 20px; } */
+
+.ant-page-header-content { padding-top: 16px; }

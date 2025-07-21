@@ -1,0 +1,36 @@
+
+<div class="alert" 
+     [class]="'alert--' + type" 
+     [class.alert--visible]="isVisible"
+     *ngIf="isVisible">
+  
+  <div class="alert__content">
+    <!-- Icono -->
+    <div class="alert__icon" *ngIf="showIcon">
+      <i [class]="getIconClass()"></i>
+    </div>
+    
+    <!-- Contenido del texto -->
+    <div class="alert__text">
+      <h4 class="alert__title" *ngIf="title">{{ title }}</h4>
+      <p class="alert__message" *ngIf="message">{{ message }}</p>
+      <ng-content></ng-content>
+    </div>
+    
+    <!-- Botón de cerrar -->
+    <button class="alert__close" 
+            *ngIf="dismissible" 
+            (click)="close()"
+            type="button"
+            aria-label="Cerrar alerta">
+      <i class="fas fa-times"></i>
+    </button>
+  </div>
+  
+  <!-- Botón de acción opcional -->
+  <div class="alert__actions" *ngIf="onAction.observers.length > 0">
+    <button class="alert__action-btn" (click)="action()" type="button">
+      Acción
+    </button>
+  </div>
+</div>

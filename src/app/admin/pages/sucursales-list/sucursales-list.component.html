@@ -1,0 +1,40 @@
+  
+  @if(paginationData){
+    <app-table
+        [data]="paginationData.items"
+        [columns]="tableColumns"
+        [title]="'Lista de Usuarios'"
+        [loading]="isLoading"
+        [rowActions]="rowActions"
+        [globalActions]="globalActions"
+        [emptyMessage]="'No se encontraron usuarios'"
+        (sortChange)="onSortChange($event)"
+        (edit)="onEdit($event)"
+        (delete)="onDelete($event)"
+        (add)="onAdd()"
+        [totalItems]="paginationData.totalCount"
+        [pageSize]="paginationData.pageSize"
+        [serverPagination]=" true"
+        (pageChange)="gotoPage($event)"
+        (searchChange)="onSearch($event)"
+        >
+      
+      </app-table>
+
+  }
+
+        <app-modal
+        [(visible)]="rightModalVisible"
+     
+        mode="right"
+        size="large"
+        variant="info"
+        [okText]="'Guardar'"
+        [cancelText]="'Cerrar'"
+        (onOk)="handleRightModalOk()"
+        (onCancel)="handleRightModalCancel()"
+      >
+      @if(formConfig && rightModalVisible){
+        <app-form [config]="formConfig" [initialData]="sucursalForEdit" (onSubmit)="onSubmit($event)"></app-form>
+      }
+      </app-modal>

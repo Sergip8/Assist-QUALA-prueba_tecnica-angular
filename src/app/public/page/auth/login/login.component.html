@@ -1,0 +1,88 @@
+<div class="login-container">
+  <div class="login-card">
+    <!-- Logo Section -->
+    <div class="logo-section">
+      <div class="logo">
+        <i nz-icon nzType="bank" class="logo-icon"></i>
+        <h1>QUALA</h1>
+      </div>
+      <p class="subtitle">Sistema de Gestión de Sucursales</p>
+    </div>
+
+    <!-- Login Form -->
+    <form nz-form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
+      <h2 class="form-title">Iniciar Sesión</h2>
+
+      <!-- Email Field -->
+      <nz-form-item>
+        <nz-form-control nzErrorTip="Por favor ingrese un email válido">
+          <nz-input-group nzPrefixIcon="mail">
+            <input 
+            class="ant-input"
+              type="email" 
+              nz-input 
+              formControlName="email" 
+              placeholder="Email"
+              autocomplete="email">
+          </nz-input-group>
+        </nz-form-control>
+      </nz-form-item>
+
+      <!-- Password Field -->
+      <nz-form-item>
+        <nz-form-control nzErrorTip="La contraseña debe tener al menos 6 caracteres">
+          <nz-input-group nzPrefixIcon="lock" class="password-input">
+            <input 
+            class="ant-input"
+              [type]="passwordVisible ? 'text' : 'password'" 
+              nz-input 
+              formControlName="password" 
+              placeholder="Contraseña"
+              autocomplete="current-password"
+              >
+
+            <i 
+              nz-icon 
+              [nzType]="passwordVisible ? 'eye-invisible' : 'eye'" 
+              nzSuffix 
+              (click)="passwordVisible = !passwordVisible"
+              class="password-toggle icon-set">
+            </i>
+          </nz-input-group>
+        </nz-form-control>
+      </nz-form-item>
+
+      <!-- Remember Me -->
+    <nz-form-item>
+  <nz-form-control>
+    <label nz-checkbox>
+      <input type="checkbox" nz-checkbox formControlName="rememberMe" />
+      Recordarme
+    </label>
+  </nz-form-control>
+</nz-form-item>
+
+      <!-- Login Button -->
+      <nz-form-item>
+        <nz-form-control>
+          <button 
+            nz-button 
+            nzType="primary" 
+            nzSize="large" 
+            [nzLoading]="loading"
+            [disabled]="!loginForm.valid"
+            class="login-button">
+            <i nz-icon nzType="login-o"></i>
+            Iniciar Sesión
+          </button>
+        </nz-form-control>
+      </nz-form-item>
+
+      <!-- Register Link -->
+      <div class="register-link">
+        <span>¿No tienes una cuenta?</span>
+        <a (click)="navigateToRegister()" class="link">Regístrate aquí</a>
+      </div>
+    </form>
+  </div>
+</div>

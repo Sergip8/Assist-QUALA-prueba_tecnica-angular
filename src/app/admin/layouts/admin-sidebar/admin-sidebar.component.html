@@ -1,0 +1,84 @@
+<nz-layout class="sidebar-layout">
+  <nz-sider 
+    class="menu-sidebar" 
+    nzCollapsible 
+    [(nzCollapsed)]="isCollapsed"
+    [nzTrigger]="null"
+    nzWidth="250px"
+    [nzCollapsedWidth]="80">
+    
+    <!-- Logo Section -->
+    <div class="sidebar-logo">
+      <div class="logo-container">
+        <i nz-icon nzType="bank" class="logo-icon"></i>
+        <span class="logo-text" *ngIf="!isCollapsed">QUALA</span>
+      </div>
+    </div>
+
+    <!-- User Info Section -->
+    <div class="user-info" *ngIf="userInfo">
+      <nz-avatar 
+        nzIcon="user" 
+        [nzSize]="isCollapsed ? 'small' : 'default'"
+        class="user-avatar">
+      </nz-avatar>
+      <div class="user-details" *ngIf="!isCollapsed">
+        <div class="user-name">{{ userInfo.userName }}</div>
+        <div class="user-role">{{ userInfo.rol }}</div>
+      </div>
+    </div>
+
+    <!-- Menu Section -->
+    <ul nz-menu 
+        nzTheme="dark" 
+        nzMode="inline" 
+        [nzInlineCollapsed]="isCollapsed"
+        [nzInlineIndent]="24">
+      <ng-container *ngFor="let item of menuItems">
+        <!-- Menu items without children -->
+        <li nz-menu-item 
+            *ngIf="!item.children" 
+            [nzSelected]="selectedMenuKey === item.key"
+            (click)="navigateTo(item.route)">
+          <i nz-icon [nzType]="item.icon"></i>
+          <span>{{ item.title }}</span>
+        </li>
+
+        <!-- Menu items with children -->
+        <li nz-submenu
+            *ngIf="item.children"
+            [nzOpen]="selectedMenuKey.includes(item.key)"
+            [nzTitle]="submenuTitle"
+            nzPopupClassName="custom-submenu-popup">
+          <ng-template #submenuTitle>
+            <i nz-icon [nzType]="item.icon" class="menu-parent-icon"></i>
+            <span>{{ item.title }}</span>
+          </ng-template>
+
+          <ul>
+            <li nz-menu-item
+                *ngFor="let child of item.children"
+                [nzSelected]="selectedMenuKey === child.key"
+                (click)="navigateTo(child.route)">
+              <i nz-icon [nzType]="child.icon"></i>
+              <span>{{ child.title }}</span>
+            </li>
+          </ul>
+        </li>
+      </ng-container>
+
+      <!-- Separator -->
+      <li nz-menu-divider></li>
+
+      <!-- Logout -->
+      <li nz-menu-item (click)="logout()">
+        <i nz-icon nzType="logout"></i>
+        <span>Cerrar Sesión</span>
+      </li>
+    </ul>
+
+    <!-- Collapse Button -->
+    <div class="collapse-trigger" (click)="toggleCollapse()">
+      <i nz-icon [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'"></i>
+    </div>
+  </nz-sider>

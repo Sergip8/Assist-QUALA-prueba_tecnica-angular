@@ -1,0 +1,168 @@
+<div class="table-container">
+  <!-- Header con título y acciones globales -->
+  <div class="table-header" *ngIf="title || globalActions.length > 0">
+    <h3 class="table-title" *ngIf="title">{{ title }}</h3>
+    <div class="global-actions" *ngIf="globalActions.length > 0">
+      <button 
+        *ngFor="let action of globalActions" 
+        nz-button 
+        [nzType]="getButtonType(action.color)"
+        [nzSize]="'default'"
+        (click)="action.callback(null)"
+        nz-tooltip
+        [nzTooltipTitle]="action.label">
+        <span nz-icon [nzType]="action.icon || 'plus'" nzTheme="outline"></span>
+        {{ action.label }}
+      </button>
+    </div>
+  </div>
+
+  <!-- ✅ NUEVO: Campo de búsqueda -->
+  <div class="search-container" *ngIf="showSearch">
+    <nz-input-group nzSearch [nzAddOnAfter]="searchSuffix" class="search-input">
+      <input 
+        type="text" 
+        nz-input 
+        [placeholder]="searchPlaceholder"
+        [(ngModel)]="searchTerm"
+        (input)="onSearchChange(searchRef.value)"
+        #searchRef
+        [maxlength]="100">
+    </nz-input-group>
+    <ng-template #searchSuffix >
+      <button 
+      class="search-icons"
+        nz-button 
+        nzType="text" 
+        nzSize="small"
+        *ngIf="searchTerm.length > 0"
+        (click)="clearSearch()"
+        nz-tooltip
+        nzTooltipTitle="Limpiar búsqueda">
+        <span nz-icon nzType="close" nzTheme="outline"></span>
+      </button>
+      <span class="search-icons" nz-icon nzType="search" nzTheme="outline" *ngIf="searchTerm.length === 0"></span>
+    </ng-template>
+  </div>
+
+  <!-- Tabla con paginación -->
+  <nz-table 
+    #basicTable 
+    [nzData]="data" 
+    [nzLoading]="loading"
+    [nzShowPagination]="showPagination"
+    [nzPageSize]="currentPageSize"
+    [nzPageIndex]="currentPage"
+    [nzTotal]="total"
+    [nzShowSizeChanger]="showSizeChanger"
+    [nzPageSizeOptions]="pageSizeOptions"
+    [nzShowQuickJumper]="showQuickJumper"
+    [nzFrontPagination]="!serverPagination"
+    (nzPageIndexChange)="onPageChange($event)"
+    (nzPageSizeChange)="onPageSizeChange($event)"
+    [nzSize]="'middle'"
+    [nzBordered]="true">
+    
+    <thead>
+      <tr>
+        <th 
+          *ngFor="let column of columns; trackBy: trackByColumn" 
+          [nzWidth]="column.width || 'center'"
+          [nzAlign]="column.align || 'left'"
+          [nzSortFn]="isColumnSortable(column) && !serverPagination ? getSortFn(column.key) : null"
+          [nzSortOrder]="getSortOrder(column.key)"
+          [nzSortDirections]="isColumnSortable(column) ? ['ascend', 'descend'] : []"
+          (nzSortOrderChange)="onColumnSortChange(column.key, $event)">
+          {{ column.label }}
+        </th>
+      </tr>
+    </thead>
+    
+    <tbody>
+      <tr *ngFor="let item of basicTable.data; trackBy: trackByFn">
+        <td 
+          *ngFor="let column of columns; trackBy: trackByColumn" 
+          [nzAlign]="column.align || 'left'">
+          
+          <!-- Contenido según tipo de columna -->
+          <ng-container [ngSwitch]="column.type">
+            
+            <!-- Texto -->
+            <span *ngSwitchCase="'text'">
+              {{ getValue(item, column.key) }}
+            </span>
+            
+            <!-- Número -->
+            <span *ngSwitchCase="'number'">
+              {{ formatNumber(getValue(item, column.key)) }}
+            </span>
+            
+            <!-- Fecha -->
+            <span *ngSwitchCase="'date'">
+              {{ formatDate(getValue(item, column.key)) }}
+            </span>
+            
+            <!-- Boolean -->
+            <nz-tag 
+              *ngSwitchCase="'boolean'" 
+              [nzColor]="getValue(item, column.key) ? 'success' : 'error'">
+              {{ getValue(item, column.key) ? 'Sí' : 'No' }}
+            </nz-tag>
+
+            <!-- Imagen -->
+            <div *ngSwitchCase="'image'" class="image-cell">
+              <img 
+                [src]="getImageSrc(getValue(item, column.key))"
+                [alt]="column.label"
+                (error)="onImageError($event)"
+                (click)="onImageClick(getImageSrc(getValue(item, column.key)))"
+                class="table-image"
+                loading="lazy">
+            </div>
+            
+            <!-- Acciones -->
+            <div *ngSwitchCase="'actions'" class="actions-cell">
+              <button 
+                *ngFor="let action of rowActions" 
+                nz-button 
+                nzSize="small"
+                [nzType]="getButtonType(action.color)"
+                (click)="action.callback(item)"
+                nz-tooltip
+                [nzTooltipTitle]="action.label"
+                class="action-btn">
+                <span nz-icon [nzType]="action.icon || 'edit'" nzTheme="outline"></span>
+              </button>
+            </div>
+            
+            <!-- Default -->
+            <span *ngSwitchDefault>
+              {{ getValue(item, column.key) }}
+            </span>
+            
+          </ng-container>
+        </td>
+      </tr>
+    </tbody>
+  </nz-table>
+
+  <!-- Estado vacío personalizado -->
+  <nz-empty 
+    *ngIf="!loading && data.length === 0"
+    [nzNotFoundContent]="emptyMessage || 'No hay datos disponibles'"
+    nzNotFoundImage="simple">
+  </nz-empty>
+</div>
+
+<!-- Modal para vista de imagen -->
+<nz-modal
+  [(nzVisible)]="isImageModalVisible"
+  nzTitle="Vista de imagen"
+  [nzFooter]="null"
+  (nzOnCancel)="closeImageModal()"
+  nzWidth="80%"
+  nzCentered>
+  <div *nzModalContent class="image-modal-content">
+    <img [src]="selectedImage" alt="Imagen ampliada" class="modal-image">
+  </div>
+</nz-modal>

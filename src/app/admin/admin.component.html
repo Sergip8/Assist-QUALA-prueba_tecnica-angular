@@ -1,0 +1,22 @@
+<nz-layout class="app-layout">
+      <!-- Sidebar -->
+      <app-admin-sidebar (isSicebarCollapsed)="isCollapsed= $event"></app-admin-sidebar>
+      
+      <!-- Main Content -->
+      <nz-layout class="inner-layout" [ngClass]="{'collapsed': isCollapsed}">
+        <nz-header class="app-header">
+          <div class="header-content">
+            <h2>{{ pageTitle }}</h2>
+            <div class="header-actions">
+              <!-- Aquí puedes agregar botones adicionales -->
+            </div>
+          </div>
+        </nz-header>
+        
+        <nz-content class="app-content">
+          <div class="content-wrapper">
+            <router-outlet></router-outlet>
+          </div>
+        </nz-content>
+      </nz-layout>
+    </nz-layout>

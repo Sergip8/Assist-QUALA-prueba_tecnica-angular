@@ -1,0 +1,256 @@
+.table-container {
+  background: var(--white);
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.table-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 20px;
+  border-bottom: 1px solid #f0f0f0;
+  background: var(--light);
+}
+
+.table-title {
+  margin: 0;
+  color: var(--dark);
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.global-actions {
+  display: flex;
+  gap: 8px;
+}
+.search-container {
+  position: relative;
+  padding: 16px 24px;
+  border-bottom: 1px solid #f0f0f0;
+  background: #fff;
+}
+
+.search-input {
+  max-width: 400px;
+  width: 100%;
+}
+
+.search-input .ant-input {
+  border-radius: 6px;
+}
+
+.search-input .ant-input-group-addon {
+  background: transparent;
+  border: none;
+  padding: 0 8px;
+}
+.search-icons{
+  background: transparent;
+  
+}
+
+.global-actions button {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.global-actions button.ant-btn-primary {
+  background-color: var(--primary);
+  border-color: var(--primary);
+}
+
+.global-actions button.ant-btn-primary:hover {
+  background-color: var(--blue);
+  border-color: var(--blue);
+}
+
+.global-actions .anticon {
+  font-size: 14px;
+}
+
+/* Personalización de la tabla ng-zorro */
+.table-container ::ng-deep .ant-table .ant-table-thead > tr > th {
+  background: var(--light);
+  color: var(--dark);
+  font-weight: 600;
+  border-bottom: 2px solid #e8e8e8;
+}
+
+.table-container ::ng-deep .ant-table .ant-table-thead > tr > th.ant-table-column-sort {
+  background: #fafafa;
+}
+
+.table-container ::ng-deep .ant-table .ant-table-column-sorter {
+  color: var(--gray);
+}
+
+.table-container ::ng-deep .ant-table .ant-table-column-sorter.ant-table-column-sorter-up.active .ant-table-column-sorter-up,
+.table-container ::ng-deep .ant-table .ant-table-column-sorter.ant-table-column-sorter-down.active .ant-table-column-sorter-down {
+  color: var(--primary);
+}
+
+.table-container ::ng-deep .ant-table .ant-table-tbody > tr {
+  transition: background-color 0.2s ease;
+}
+
+.table-container ::ng-deep .ant-table .ant-table-tbody > tr:hover > td {
+  background: var(--light) !important;
+}
+
+.table-container ::ng-deep .ant-table .ant-table-tbody > tr > td {
+  border-bottom: 1px solid #f0f0f0;
+  padding: 12px 16px;
+}
+
+.table-container ::ng-deep .ant-table .ant-table-placeholder .ant-table-expanded-row-fixed {
+  margin: 0 -16px;
+}
+
+.table-container ::ng-deep .ant-empty {
+  margin: 40px 0;
+}
+
+.table-container ::ng-deep .ant-empty .ant-empty-description {
+  color: var(--gray);
+}
+
+.table-container ::ng-deep .ant-spin-nested-loading .ant-spin .ant-spin-dot i {
+  background-color: var(--primary);
+}
+
+/* Estilos específicos para celdas */
+.image-cell {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.table-image {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  border: 2px solid transparent;
+}
+
+.table-image:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  border-color: var(--primary);
+}
+
+.actions-cell {
+  display: flex;
+  gap: 4px;
+  justify-content: center;
+}
+
+.action-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 32px;
+  height: 32px;
+  padding: 0;
+  transition: all 0.2s ease;
+}
+
+.action-btn.ant-btn-primary {
+  background-color: var(--primary);
+  border-color: var(--primary);
+}
+
+.action-btn.ant-btn-primary:hover {
+  background-color: var(--blue);
+  border-color: var(--blue);
+  transform: translateY(-1px);
+}
+
+.action-btn.ant-btn-default:hover {
+  color: var(--primary);
+  border-color: var(--primary);
+  transform: translateY(-1px);
+}
+
+.action-btn .anticon {
+  font-size: 14px;
+}
+
+/* Modal de imagen */
+.image-modal-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-image {
+  max-width: 100%;
+  max-height: 70vh;
+  object-fit: contain;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Personalización de tags para valores booleanos */
+.table-container ::ng-deep .ant-tag {
+  border-radius: 12px;
+  font-size: 11px;
+  font-weight: 500;
+  padding: 2px 8px;
+  border: none;
+}
+
+.table-container ::ng-deep .ant-tag.ant-tag-success {
+  background-color: var(--success);
+  color: var(--white);
+}
+
+.table-container ::ng-deep .ant-tag.ant-tag-error {
+  background-color: var(--danger);
+  color: var(--white);
+}
+
+/* Estados de loading */
+.table-container ::ng-deep .ant-table-tbody > tr.ant-table-placeholder:hover > td {
+  background: transparent !important;
+}
+
+/* Animaciones suaves */
+* {
+  transition: color 0.2s ease, background-color 0.2s ease, border-color 0.2s ease;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .table-header {
+    flex-direction: column;
+    gap: 12px;
+    align-items: flex-start;
+  }
+  
+  .global-actions {
+    width: 100%;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+  }
+  
+  .actions-cell {
+    flex-direction: column;
+    gap: 2px;
+  }
+  
+  .actions-cell .action-btn {
+    width: 100%;
+    min-width: unset;
+  }
+  
+  .image-cell .table-image {
+    width: 40px;
+    height: 40px;
+  }
+}

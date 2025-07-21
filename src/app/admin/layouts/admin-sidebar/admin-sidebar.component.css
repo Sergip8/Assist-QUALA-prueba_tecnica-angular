@@ -1,0 +1,236 @@
+/* Solución principal: Asegurar que los popovers del menú se muestren correctamente */
+.menu-sidebar {
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  height: 100vh;
+  z-index: 1000;
+  box-shadow: 2px 0 6px rgba(52, 58, 64, 0.35);
+  background: var(--dark);
+  /* Importante: permitir que el contenido se desborde */
+  overflow: visible !important;
+}
+
+/* Asegurar que el contenedor del layout no oculte los popovers */
+.sidebar-layout {
+  overflow: visible !important;
+}
+
+/* Configurar z-index alto para los popovers/tooltips de Ant Design */
+.ant-tooltip,
+.ant-popover {
+  z-index: 1050 !important;
+}
+
+/* Específicamente para los submenús en modo colapsado */
+.ant-menu-submenu-popup {
+  z-index: 1050 !important;
+}
+
+/* Asegurar que el menú inline colapsado funcione correctamente */
+.ant-menu-inline-collapsed > .ant-menu-submenu > .ant-menu-submenu-title::after {
+  display: none;
+}
+
+/* Estilo específico para submenús cuando están colapsados */
+.ant-menu-inline-collapsed .ant-menu-submenu-vertical > .ant-menu-submenu-title:after {
+  border-right: 6px solid rgba(255, 255, 255, 0.8);
+  border-left: 0;
+  left: auto;
+  right: 16px;
+}
+
+/* Mejorar la visibilidad del popover */
+.ant-menu-submenu-popup.ant-menu-submenu-popup-placement-rightTop {
+  left: 80px !important; /* Ajustar según el ancho colapsado */
+}
+
+/* Resto de los estilos existentes */
+.sidebar-logo {
+  height: 64px;
+  padding: 16px;
+  background: rgba(255, 255, 255, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.logo-icon {
+  font-size: 24px;
+  color: var(--primary);
+}
+
+.logo-text {
+  font-size: 18px;
+  font-weight: bold;
+  color: var(--white);
+  letter-spacing: 1px;
+}
+
+.user-info {
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.user-avatar {
+  background-color: var(--primary);
+  flex-shrink: 0;
+}
+
+.user-details {
+  flex: 1;
+  overflow: hidden;
+}
+
+.user-name {
+  color: var(--white);
+  font-weight: 500;
+  font-size: 14px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.user-role {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 12px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.collapse-trigger {
+  position: absolute;
+  bottom: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--primary);
+  color: var(--white);
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.collapse-trigger:hover {
+  background: var(--info);
+  transform: translateX(-50%) scale(1.1);
+}
+
+/* Menu Styles */
+.ant-menu-dark {
+  background: transparent;
+}
+
+.ant-menu-dark .ant-menu-item {
+  color: rgba(255, 255, 255, 0.8);
+  border-radius: 6px;
+  margin: 4px 8px;
+  width: auto;
+}
+
+.ant-menu-dark .ant-menu-item:hover {
+  background: rgba(0, 123, 255, 0.2);
+  color: var(--white);
+}
+
+.ant-menu-dark .ant-menu-item-selected {
+  background: var(--primary);
+  color: var(--white);
+}
+
+.ant-menu-dark .ant-menu-submenu-title {
+  color: rgba(255, 255, 255, 0.8);
+  border-radius: 6px;
+  margin: 4px 8px;
+  width: auto;
+}
+
+.ant-menu-dark .ant-menu-submenu-title:hover {
+  background: rgba(0, 123, 255, 0.2);
+  color: var(--white);
+}
+
+.ant-menu-dark .ant-menu-submenu-inner > .ant-menu-item {
+  padding-left: 40px !important;
+}
+
+.ant-menu-dark .ant-menu-divider {
+  background: rgba(255, 255, 255, 0.1);
+  margin: 16px 8px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .menu-sidebar {
+    transform: translateX(-100%);
+    transition: transform 0.3s;
+  }
+  
+  .menu-sidebar.mobile-open {
+    transform: translateX(0);
+  }
+}
+
+/* Animation */
+.ant-menu-dark .ant-menu-item,
+.ant-menu-dark .ant-menu-submenu-title {
+  transition: all 0.3s;
+}
+
+.sidebar-logo,
+.user-info {
+  transition: all 0.3s;
+}
+
+/* Scrollbar */
+.menu-sidebar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.menu-sidebar::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.menu-sidebar::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 3px;
+}
+
+.menu-sidebar::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.5);
+}
+
+/* Solución adicional: Asegurar que el contenido principal no interfiera */
+.main-content {
+  margin-left: 250px; /* Cuando no está colapsado */
+  transition: margin-left 0.3s;
+  position: relative;
+  z-index: 1;
+}
+
+.main-content.collapsed {
+  margin-left: 80px; /* Cuando está colapsado */
+}
+
+/* Opcional: Forzar el z-index para elementos específicos de NG-ZORRO */
+.ant-menu-submenu-popup.ant-menu-dark {
+  z-index: 1050 !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
