@@ -1,0 +1,53 @@
+.home-description {
+  margin-top: 2rem;
+  max-width: 600px;
+  margin: 80px auto;
+  padding: 32px 24px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.08);
+  font-family: 'Segoe UI', 'Roboto', Arial, sans-serif;
+  color: #222;
+}
+
+.home-description h1 {
+  color: #1890ff;
+  font-size: 2.2rem;
+  margin-bottom: 18px;
+  text-align: center;
+}
+
+.home-description ul {
+  margin: 18px 0 18px 20px;
+  padding: 0;
+  font-size: 1.08rem;
+}
+
+.home-description li {
+  margin-bottom: 7px;
+  line-height: 1.6;
+}
+
+.home-description p {
+  margin-bottom: 12px;
+  font-size: 1.05rem;
+}
+
+.home-description strong {
+  color: #222;
+}
+
+.home-description i {
+  color: #888;
+  font-size: 0.98rem;
+}
+
+@media (max-width: 700px) {
+  .home-description {
+    padding: 18px 6px;
+    max-width: 98vw;
+  }
+  .home-description h1 {
+    font-size: 1.4rem;
+  }
+}

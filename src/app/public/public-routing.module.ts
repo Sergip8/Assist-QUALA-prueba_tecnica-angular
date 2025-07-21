@@ -4,16 +4,17 @@ import { PublicRoutes } from "./public.routes";
 import { NgModule } from "@angular/core";
 import { LoginComponent } from "./page/auth/login/login.component";
 import { RegisterComponent } from "./page/auth/register/register.component";
+import { HomeComponent } from "./page/home/home.component";
 
 
 
 const routes: Routes = [
 
-    // {
-    //   path: PublicRoutes.Home,
-    //   title: 'Home',
-    //   component: HomeComponent,
-    // },
+    {
+      path: PublicRoutes.Home,
+     title: 'Home',
+     component: HomeComponent,
+    },
     // {
     //   path: PublicRoutes.Services,
     //   title: 'Home',
