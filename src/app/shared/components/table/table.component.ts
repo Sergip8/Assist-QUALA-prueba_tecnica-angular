@@ -59,7 +59,7 @@ export class TableComponent implements OnInit, OnDestroy {
   @Input() emptyMessage?: string;
   @Input() loading: boolean = false;
   
-  // ✅ Propiedades de paginación
+ 
   @Input() showPagination: boolean = true;
   @Input() pageSize: number = 4;
   @Input() showSizeChanger: boolean = true;
@@ -69,7 +69,7 @@ export class TableComponent implements OnInit, OnDestroy {
   @Input() totalItems?: number;
   @Input() serverPagination: boolean = false;
 
-  // ✅ NUEVO: Propiedades de búsqueda
+
   @Input() showSearch: boolean = true;
   @Input() searchPlaceholder: string = 'Buscar...';
   @Input() searchMinLength: number = 3;
@@ -80,32 +80,30 @@ export class TableComponent implements OnInit, OnDestroy {
   @Output() add = new EventEmitter<any>();
   @Output() sortChange = new EventEmitter<SortEvent>();
   
-  // ✅ Eventos de paginación
+
   @Output() pageChange = new EventEmitter<number>();
   @Output() pageSizeChange = new EventEmitter<number>();
 
-  // ✅ NUEVO: Evento de búsqueda
+
   @Output() searchChange = new EventEmitter<string>();
 
   selectedImage: string | null = null;
   isImageModalVisible: boolean = false;
 
-  // ✅ Propiedades internas de paginación
   currentPage: number = 1;
   currentPageSize: number = 10;
 
-  // ✅ Propiedades para el ordenamiento
+ 
   currentSortColumn: string | null = null;
   currentSortDirection: 'asc' | 'desc' | null = null;
 
-  // ✅ NUEVO: Propiedades para la búsqueda
+
   searchTerm: string = '';
   private searchSubject = new Subject<string>();
 
-  // ✅ Subject para manejar la destrucción de subscripciones
+
   private destroy$ = new Subject<void>();
 
-  // ✅ Cache para funciones de ordenamiento
   private sortFnCache = new Map<string, (a: any, b: any) => number>();
 
   ngOnInit(): void {
@@ -114,14 +112,14 @@ export class TableComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    // ✅ Limpiar todas las subscripciones
+
     this.destroy$.next();
     this.destroy$.complete();
     
-    // ✅ Limpiar cache
+
     this.sortFnCache.clear();
     
-    // ✅ Limpiar referencias
+  
     this.selectedImage = null;
     this.isImageModalVisible = false;
   }
@@ -136,49 +134,46 @@ export class TableComponent implements OnInit, OnDestroy {
       .subscribe(searchTerm => {
         if (searchTerm.length >= this.searchMinLength || searchTerm.length === 0) {
           this.searchChange.emit(searchTerm);
-          // Resetear a la primera página cuando se busca
+       
           this.currentPage = 1;
           this.pageChange.emit(1);
         }
       });
   }
 
-  // ✅ NUEVO: Manejar el cambio en el input de búsqueda
+ 
   onSearchChange(value: string): void {
     this.searchTerm = value;
     this.searchSubject.next(value);
   }
 
-  // ✅ NUEVO: Limpiar búsqueda
+
   clearSearch(): void {
     this.searchTerm = '';
     this.searchSubject.next('');
   }
 
-  // ✅ Getter para total de elementos
+
   get total(): number {
     return this.totalItems ?? this.data.length;
   }
 
-  // ✅ Manejo de cambio de página
   onPageChange(page: number): void {
     this.currentPage = page;
     this.pageChange.emit(page);
   }
 
-  // ✅ Manejo de cambio de tamaño de página
   onPageSizeChange(size: number): void {
     this.currentPageSize = size;
     this.currentPage = 1;
     this.pageSizeChange.emit(size);
   }
 
-  // ✅ Función para mostrar información del total
+
   totalNumber(total: number, range: [number, number]){
     return `${range[0]}-${range[1]} de ${total} elementos`;
   };
 
-  // ✅ NUEVO: Manejo del evento de ordenamiento por columna
   onColumnSortChange(columnKey: string, sortOrder: string | null): void {
     if (!this.sortable) return;
 
@@ -193,18 +188,18 @@ export class TableComponent implements OnInit, OnDestroy {
       newDirection = 'desc';
     }
 
-    // Actualizar el estado interno
+ 
     this.currentSortColumn = newDirection ? columnKey : null;
     this.currentSortDirection = newDirection;
 
-    // Emitir el evento
+
     this.sortChange.emit({
       column: columnKey,
       direction: newDirection
     });
   }
 
-  // ✅ NUEVO: Método para obtener el estado de ordenamiento de una columna
+
   getSortOrder(columnKey: string): string | null {
     if (this.currentSortColumn === columnKey) {
       return this.currentSortDirection === 'asc' ? 'ascend' : 
@@ -213,17 +208,14 @@ export class TableComponent implements OnInit, OnDestroy {
     return null;
   }
 
-  // ✅ NUEVO: Método para verificar si una columna es sorteable
   isColumnSortable(column: TableColumn): boolean {
     return this.sortable && (column.sortable !== false);
   }
 
-  // ✅ Optimizado con memoización
   trackByFn = (index: number, item: any): any => {
     return item.id || item._id || index;
   };
 
-  // ✅ Optimizado con memoización
   trackByColumn = (index: number, column: TableColumn): string => {
     return column.key;
   };
@@ -233,7 +225,6 @@ export class TableComponent implements OnInit, OnDestroy {
     return key.split('.').reduce((obj, prop) => obj?.[prop], item);
   }
 
-  // ✅ Versión cacheada para evitar recrear funciones constantemente
   getSortFn(key: string) {
     if (!this.sortFnCache.has(key)) {
       const sortFn = (a: any, b: any) => {
@@ -291,7 +282,6 @@ export class TableComponent implements OnInit, OnDestroy {
     this.selectedImage = null;
   }
 
-  // ✅ Versión optimizada con cache
   private numberFormatCache = new Map<number, string>();
   
   formatNumber(value: any): string {
@@ -309,7 +299,6 @@ export class TableComponent implements OnInit, OnDestroy {
     return formatted;
   }
 
-  // ✅ Versión optimizada con cache
   private dateFormatCache = new Map<string, string>();
   
   formatDate(value: any): string {

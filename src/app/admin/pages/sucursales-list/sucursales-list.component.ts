@@ -11,6 +11,7 @@ import { monedaService } from '../../../_core/services/moneda.service';
 import { SucursalUpdate } from '../../../models/sucursal-update.model';
 import { SucursalCreate } from '../../../models/sucursal-create.model';
 import { AuthService } from '../../../_core/services/auth.service';
+import { NzMessageService } from 'ng-zorro-antd/message';
 
 @Component({
   selector: 'app-sucursales-list',
@@ -35,10 +36,8 @@ export class SucursalesListComponent  implements OnInit{
   fielsToSearch = ["descripcion", "direccion"]
    
 
-  constructor(private sucursalService: SucursalService, private monedaService: monedaService, private authService: AuthService){
-    this.formConfig = createSucursalFormConfig({
-      buscarMonedas: (term: string) => this.monedaService.getMonedas(term)
-    })
+  constructor(private message: NzMessageService, private sucursalService: SucursalService, private monedaService: monedaService, private authService: AuthService){
+   
   }
   ngOnInit(): void {
     this.getSucursalesPaginated()
@@ -111,9 +110,13 @@ export class SucursalesListComponent  implements OnInit{
   }
 
   onAdd(): void {
+     this.formConfig = createSucursalFormConfig({
+      buscarMonedas: (term: string) => this.monedaService.getMonedas(term)
+    })
     //this.modalService()
+
     this.rightModalVisible = true
-    console.log('Add new item');
+    this.sucursalForEdit = null;
   }
 
   onExport(): void {
@@ -157,75 +160,70 @@ onSubmit(data: any){
   }
 }
 
-createSucursal(sucursalData: SucursalCreate): void {
- 
-    
+ createSucursal(sucursalData: SucursalCreate): void {
     this.sucursalService.createSucursal(sucursalData).subscribe({
-      next: (response) => {
-      
+      next: (response) => { 
         if (response.success) {
+          this.message.success(response.message || 'Sucursal creada exitosamente.'); 
           console.log('Sucursal creada exitosamente:', response.data);
-          this.paginationData.items.push(response.data)
+          this.paginationData.items = [...this.paginationData.items, response.data];
           this.rightModalVisible = false;
-
         } else {
+          this.message.error(response.message || 'Error al crear sucursal.'); 
           console.error('Error al crear sucursal:', response.message);
-   
         }
       },
       error: (error) => {
-
+        this.message.error('Error en la petición: ' + (error.message || 'Ha ocurrido un error inesperado.'));
         console.error('Error en la petición:', error);
-
       }
     });
   }
 
   // Actualizar sucursal existente
   updateSucursal(id: number, sucursalData: SucursalUpdate): void {
-    this.sucursalForEdit = null
-    
-    this.sucursalService.updateSucursal(id, sucursalData).subscribe({
-      next: (response) => {
-     
-        if (response.success) {
-          console.log('Sucursal actualizada exitosamente:', response.data);
-         
-        } else {
-          console.error('Error al actualizar sucursal:', response.message);
-        
-        }
-      },
-      error: (error) => {
-     
-        console.error('Error en la petición:', error);
-       
+  
+
+  this.sucursalService.updateSucursal(id, sucursalData).subscribe({
+    next: (response) => {
+      if (response.success) {
+        this.rightModalVisible = false;
+        this.message.success(response.message || 'Sucursal actualizada exitosamente.'); 
+        console.log('Sucursal actualizada exitosamente:', response.data);
+        this.paginationData.items = this.paginationData.items.map((item: any) =>
+            item.id === id ? response.data : item
+          );
+
+      } else {
+        this.message.error(response.message || 'Error al actualizar sucursal.'); 
+        console.error('Error al actualizar sucursal:', response.message);
       }
-    });
-  }
+    },
+    error: (error) => {
+      this.message.error('Error en la petición: ' + (error.message || 'Ha ocurrido un error inesperado.'));
+      console.error('Error en la petición:', error);
+    }
+  });
+}
 
   // Eliminar sucursal
   deleteSucursal(id: number): void {
-    // Opcional: Mostrar confirmación antes de eliminar
     if (!confirm('¿Está seguro de que desea eliminar esta sucursal?')) {
       return;
     }
-    
-  
-    
     this.sucursalService.deleteSucursal(id).subscribe({
       next: (response) => {
   
         if (response.success && response.data) {
           console.log('Sucursal eliminada exitosamente');
-       
+       this.message.success(response.message || 'Sucursal eliminada exitosamente.'); 
         } else {
           console.error('Error al eliminar sucursal:', response.message);
      
         }
       },
       error: (error) => {
-     
+        this.message.error('Error en la petición: ' + (error.message || 'Ha ocurrido un error inesperado.'));
         console.error('Error en la petición:', error);
     
       }

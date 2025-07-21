@@ -146,7 +146,7 @@
     </tbody>
   </nz-table>
 
-  <!-- Estado vacío personalizado -->
+
   <nz-empty 
     *ngIf="!loading && data.length === 0"
     [nzNotFoundContent]="emptyMessage || 'No hay datos disponibles'"
@@ -154,7 +154,7 @@
   </nz-empty>
 </div>
 
-<!-- Modal para vista de imagen -->
+
 <nz-modal
   [(nzVisible)]="isImageModalVisible"
   nzTitle="Vista de imagen"

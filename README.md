@@ -1,59 +1,62 @@
 # QualaSucursalesAng
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.3.
+**QualaSucursalesAng** es una aplicación web desarrollada en Angular para la gestión y visualización de sucursales, y estadísticas administrativas. Incluye autenticación de usuarios, panel administrativo, manejo de roles y visualización de datos mediante gráficos.
 
-## Development server
+## Tecnologías principales
+- **Angular** 19+
+- **ng-zorro-antd** (componentes UI)
+- **ng2-charts** (gráficas)
+- **RxJS**
 
-To start a local development server, run:
+## Estructura general del proyecto
+- `src/app/public`: Módulo público, incluye páginas de login y registro.
+- `src/app/admin`: Panel administrativo, dashboard y gestión de sucursales.
+- `src/app/_core`: Servicios, guardias, interceptores y lógica central.
+- `src/app/models`: Modelos de datos y esquemas de tablas/formularios.
+- `src/app/shared`: Componentes y módulos reutilizables.
+
+## Funcionalidades principales
+
+### 1. Autenticación de usuarios
+- **Login**: Permite a los usuarios autenticarse con email y contraseña.
+- **Registro**: Permite crear una nueva cuenta de usuario.
+- Redirección según rol (admin o usuario público).
+
+### 2. Panel administrativo
+- **Dashboard**: Visualización de estadísticas con gráficos (distribución de monedas, roles, salud del sistema, etc.).
+- **Gestión de sucursales**: Listado, búsqueda, paginación, creación, edición y eliminación de sucursales.
+- **Acciones rápidas**: Exportar datos, agregar usuarios, editar/eliminar sucursales.
+
+### 3. Seguridad y roles
+- Acceso al panel admin protegido por guardias de rol.
+- Navegación diferenciada para usuarios autenticados y no autenticados.
+
+## Instalación y ejecución
+
+1. Instala las dependencias:
+
+```bash
+npm install
+```
+
+2. Inicia el servidor de desarrollo:
 
 ```bash
 ng serve
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+3. Accede a la aplicación en [http://localhost:4200](http://localhost:4200)
 
-## Code scaffolding
+## Scripts útiles
+- `npm start`: Inicia el servidor de desarrollo.
+- `npm run build`: Compila la aplicación para producción.
+- `npm test`: Ejecuta los tests unitarios.
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+## Recursos adicionales
+- [Documentación Angular CLI](https://angular.dev/tools/cli)
+- [ng-zorro-antd](https://ng.ant.design/docs/introduce/es)
+- [ng2-charts](https://valor-software.com/ng2-charts/)
 
-```bash
-ng generate component component-name
-```
+---
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+Proyecto generado con [Angular CLI](https://github.com/angular/angular-cli).
