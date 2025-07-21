@@ -1,205 +1,74 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { catchError, Observable, of, retry, tap, timeout } from 'rxjs';
 import { DashboardData } from '../../models/dashboard.model';
+import { ApiRequest } from '../../models/api.model';
+import { CacheService } from './cache.service';
+import { handleError } from './handler/handle-error';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { environment } from '../../../environments/environment';
 
+const baseUrl = `${environment.API_URL}/dashboard`;
 
 @Injectable({
   providedIn: 'root',
 })
 export class DashboardService {
-  private mockDashboardData: DashboardData = {
-    success: true,
-    message: 'Datos del dashboard obtenidos exitosamente',
-    statusCode: '200',
-    type: 'Success',
-    data: {
-      metrics: {
-        totalSucursalesActivas: 5,
-        totalSucursalesInactivas: 0,
-        totalUsuariosActivos: 3,
-        totalUsuariosInactivos: 0,
-        totalMonedasActivas: 6,
-        sucursalesRegistradasPeriodo: 0,
-        usuariosRegistradosPeriodo: 0,
-        fechaInicioReporte: '2024-01-01T00:00:00',
-        fechaFinReporte: '2024-12-31T00:00:00',
-        fechaGeneracionReporte: '2025-07-20T16:48:13.213',
-      },
-      distribucionMonedas: [
-        {
-          nombreMoneda: 'Peso Colombiano',
-          simboloMoneda: 'COP$',
-          cantidadSucursales: 3,
-          porcentajeDistribucion: 60.0,
-        },
-        {
-          nombreMoneda: 'Peso Mexicano',
-          simboloMoneda: 'MXN',
-          cantidadSucursales: 1,
-          porcentajeDistribucion: 20.0,
-        },
-        {
-          nombreMoneda: 'Peso Argentino',
-          simboloMoneda: 'ARS',
-          cantidadSucursales: 1,
-          porcentajeDistribucion: 20.0,
-        },
-        {
-          nombreMoneda: 'Libra Esterlina',
-          simboloMoneda: '£',
-          cantidadSucursales: 0,
-          porcentajeDistribucion: 0.0,
-        },
-        {
-          nombreMoneda: 'Dólar estadounidense',
-          simboloMoneda: '$',
-          cantidadSucursales: 0,
-          porcentajeDistribucion: 0.0,
-        },
-        {
-          nombreMoneda: 'Euro',
-          simboloMoneda: '€',
-          cantidadSucursales: 0,
-          porcentajeDistribucion: 0.0,
-        },
-      ],
-      distribucionRoles: [
-        {
-          rol: 'Admin',
-          cantidadUsuarios: 1,
-          porcentajeDistribucion: 33.33,
-          usuariosActivos: 1,
-          usuariosInactivos: 0,
-        },
-        {
-          rol: 'Manager',
-          cantidadUsuarios: 1,
-          porcentajeDistribucion: 33.33,
-          usuariosActivos: 1,
-          usuariosInactivos: 0,
-        },
-        {
-          rol: 'User',
-          cantidadUsuarios: 1,
-          porcentajeDistribucion: 33.33,
-          usuariosActivos: 1,
-          usuariosInactivos: 0,
-        },
-      ],
-      actividadMensual: [
-        {
-          año: 2025,
-          mes: 7,
-          nombreMes: 'July 2025',
-          sucursalesRegistradas: 5,
-          usuariosRegistrados: 3,
-        },
-      ],
-      sucursalesRecientes: [
-        {
-          idSucursal: 1,
-          codigo: 1001,
-          descripcion: 'Sucursal Principal Bogotá',
-          direccion: 'Carrera 7 # 72-13, Bogotá D.C.',
-          fechaRegistro: '2025-07-20T16:47:17.98',
-          usuarioRegistro: 'admin_test',
-          monedaNombre: 'Peso Colombiano',
-          monedaSimbolo: 'COP$',
-          estado: 'Activa',
-        },
-        {
-          idSucursal: 2,
-          codigo: 1002,
-          descripcion: 'Sucursal Medellín Norte',
-          direccion: 'Avenida 80 # 45-20, Medellín',
-          fechaRegistro: '2025-07-20T16:47:17.98',
-          usuarioRegistro: 'admin_test',
-          monedaNombre: 'Peso Colombiano',
-          monedaSimbolo: 'COP$',
-          estado: 'Activa',
-        },
-        {
-          idSucursal: 3,
-          codigo: 1003,
-          descripcion: 'Sucursal Cali Sur',
-          direccion: 'Calle 5 # 34-80, Cali',
-          fechaRegistro: '2025-07-20T16:47:17.98',
-          usuarioRegistro: 'admin_test',
-          monedaNombre: 'Peso Colombiano',
-          monedaSimbolo: 'COP$',
-          estado: 'Activa',
-        },
-        {
-          idSucursal: 4,
-          codigo: 1004,
-          descripcion: 'Sucursal Ciudad de México',
-          direccion: 'Paseo de la Reforma 296, CDMX',
-          fechaRegistro: '2025-07-20T16:47:17.98',
-          usuarioRegistro: 'admin_test',
-          monedaNombre: 'Peso Mexicano',
-          monedaSimbolo: 'MXN',
-          estado: 'Activa',
-        },
-        {
-          idSucursal: 5,
-          codigo: 1005,
-          descripcion: 'Sucursal Buenos Aires',
-          direccion: 'Avenida Corrientes 1234, CABA',
-          fechaRegistro: '2025-07-20T16:47:17.98',
-          usuarioRegistro: 'admin_test',
-          monedaNombre: 'Peso Argentino',
-          monedaSimbolo: 'ARS',
-          estado: 'Activa',
-        },
-      ],
-      usuariosRecientes: [
-        {
-          idUsuario: 1,
-          nombreUsuario: 'admin_test',
-          email: 'admin@empresa.com',
-          rol: 'Admin',
-          fechaRegistro: '2025-07-20T16:47:17.75',
-          estado: 'Activo',
-          diasDesdeRegistro: 0,
-        },
-        {
-          idUsuario: 3,
-          nombreUsuario: 'manager_test',
-          email: 'manager@empresa.com',
-          rol: 'Manager',
-          fechaRegistro: '2025-07-20T16:47:17.75',
-          estado: 'Activo',
-          diasDesdeRegistro: 0,
-        },
-        {
-          idUsuario: 2,
-          nombreUsuario: 'user_test',
-          email: 'user@empresa.com',
-          rol: 'User',
-          fechaRegistro: '2025-07-20T16:47:17.75',
-          estado: 'Activo',
-          diasDesdeRegistro: 0,
-        },
-      ],
-      estadoSistema: [
-        {
-          categoria: 'Sistema',
-          estado: 'Operativo',
-          porcentajeSalud: 100.0,
-          ultimaVerificacion: '2025-07-20T16:48:13.223',
-        },
-        {
-          categoria: 'Base de Datos',
-          estado: 'Conectada',
-          porcentajeSalud: 99.9,
-          ultimaVerificacion: '2025-07-20T16:48:13.223',
-        },
-      ],
-    },
-    timestamp: '2025-07-20T21:48:13.3319461Z',
-  };
+ 
 
-  getDashboardData(): Observable<DashboardData> {
-    return of(this.mockDashboardData);
+ constructor(private http: HttpClient, private cacheService: CacheService){}
+
+  getDashboardData(fechaInicio?: string, fechaFin?: string): Observable<ApiRequest<DashboardData>> {
+    let finalFechaFin: string;
+    let finalFechaInicio: string;
+
+    // Calcular la fecha actual en formato YYYY-MM-DD
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = (today.getMonth() + 1).toString().padStart(2, '0');
+    const day = today.getDate().toString().padStart(2, '0');
+    finalFechaFin = fechaFin || `${year}-${month}-${day}`; // Usa la fecha proporcionada o la actual
+
+    // Calcular la fecha de inicio (10 días antes de la fecha de fin)
+    const startDate = new Date(finalFechaFin);
+    startDate.setDate(startDate.getDate() - 10);
+    const startYear = startDate.getFullYear();
+    const startMonth = (startDate.getMonth() + 1).toString().padStart(2, '0');
+    const startDay = startDate.getDate().toString().padStart(2, '0');
+    finalFechaInicio = fechaInicio || `${startYear}-${startMonth}-${startDay}`; // Usa la fecha proporcionada o 10 días antes
+
+    // Generar una clave única para la caché basada en los parámetros finales
+    const cacheKey = this.cacheService.generateCacheKey(`dashboardData-${finalFechaInicio}-${finalFechaFin}`);
+    const cachedData = this.cacheService.getFromCache<ApiRequest<DashboardData>>(cacheKey);
+
+    // Si hay datos en caché, devolverlos inmediatamente
+    if (cachedData) {
+      console.log('Datos del dashboard obtenidos de la caché:', cacheKey);
+      return of(cachedData);
+    }
+
+    // Limpiar caché expirada antes de hacer una nueva llamada
+    this.cacheService.cleanExpiredCache();
+
+    // Construir los parámetros de la URL
+    let params = new HttpParams();
+    params = params.append('fechaInicio', finalFechaInicio);
+    params = params.append('fechaFin', finalFechaFin);
+
+    // Realizar la solicitud GET
+    return this.http.get<ApiRequest<DashboardData>>(`${baseUrl}`, { params })
+      .pipe(
+        timeout(15000), // Aumenta el timeout para dashboards que pueden tardar más
+        retry(3),       // Reintentar la solicitud hasta 3 veces si falla
+        tap(data => {
+          // Guardar los datos en caché si la solicitud fue exitosa
+          this.cacheService.setCache(cacheKey, data);
+          console.log('Datos del dashboard guardados en caché:', cacheKey);
+        }),
+        catchError(error => {
+          // Manejar errores usando tu función `handleError`
+          console.error('Error al obtener los datos del dashboard:', error);
+          return handleError(error); // Asegúrate de que handleError devuelva un Observable
+        })
+      );
   }
 }

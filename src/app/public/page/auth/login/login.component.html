@@ -18,7 +18,7 @@
         <nz-form-control nzErrorTip="Por favor ingrese un email válido">
           <nz-input-group nzPrefixIcon="mail">
             <input 
-            class="ant-input"
+            
               type="email" 
               nz-input 
               formControlName="email" 
@@ -33,7 +33,7 @@
         <nz-form-control nzErrorTip="La contraseña debe tener al menos 6 caracteres">
           <nz-input-group nzPrefixIcon="lock" class="password-input">
             <input 
-            class="ant-input"
+            
               [type]="passwordVisible ? 'text' : 'password'" 
               nz-input 
               formControlName="password" 
@@ -55,8 +55,8 @@
       <!-- Remember Me -->
     <nz-form-item>
   <nz-form-control>
-    <label nz-checkbox>
-      <input type="checkbox" nz-checkbox formControlName="rememberMe" />
+    <label nz-checkbox formControlName="rememberMe">
+     
       Recordarme
     </label>
   </nz-form-control>

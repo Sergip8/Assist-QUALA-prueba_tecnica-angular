@@ -1,9 +1,5 @@
 export interface DashboardData {
-  success: boolean;
-  message: string;
-  statusCode: string;
-  type: string;
-  data: {
+ 
     metrics: Metrics;
     distribucionMonedas: MonedaDistribucion[];
     distribucionRoles: RolDistribucion[];
@@ -11,8 +7,7 @@ export interface DashboardData {
     sucursalesRecientes: Sucursal[];
     usuariosRecientes: Usuario[];
     estadoSistema: EstadoSistema[];
-  };
-  timestamp: string;
+ 
 }
 
 export interface Metrics {

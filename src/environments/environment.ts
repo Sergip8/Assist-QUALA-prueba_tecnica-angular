@@ -1,4 +1,5 @@
 export const environment = {
      
-     API_URL: "http://localhost:5199/api"
+     
+     API_URL: "https://quala-sucursales-latest.onrender.com/api"
 };

@@ -17,7 +17,7 @@
       <nz-form-item>
         <nz-form-control nzErrorTip="Por favor ingresa tu nombre">
           <nz-input-group nzPrefixIcon="user">
-            <input  class="ant-input" nz-input formControlName="userName" placeholder="Nombre de Usuario" autocomplete="userName" />
+            <input  nz-input formControlName="userName" placeholder="Nombre de Usuario" autocomplete="userName" />
           </nz-input-group>
         </nz-form-control>
       </nz-form-item>
@@ -26,7 +26,7 @@
       <nz-form-item>
         <nz-form-control nzErrorTip="Por favor ingresa un email válido">
           <nz-input-group nzPrefixIcon="mail">
-            <input  class="ant-input" nz-input type="email" formControlName="email" placeholder="Email" autocomplete="email" />
+            <input  nz-input type="email" formControlName="email" placeholder="Email" autocomplete="email" />
           </nz-input-group>
         </nz-form-control>
       </nz-form-item>
@@ -35,7 +35,7 @@
       <nz-form-item>
         <nz-form-control nzErrorTip="Mínimo 6 caracteres">
           <nz-input-group nzPrefixIcon="lock" class="password-input">
-            <input  class="ant-input" nz-input [type]="passwordVisible ? 'text' : 'password'" formControlName="password" placeholder="Contraseña" autocomplete="new-password" />
+            <input   nz-input [type]="passwordVisible ? 'text' : 'password'" formControlName="password" placeholder="Contraseña" autocomplete="new-password" />
             <i nz-icon [nzType]="passwordVisible ? 'eye-invisible' : 'eye'" nzSuffix (click)="passwordVisible = !passwordVisible" class="password-toggle icon-set"></i>
           </nz-input-group>
         </nz-form-control>
@@ -45,7 +45,7 @@
       <nz-form-item *ngIf="registerForm.hasError('mismatch')">
         <nz-form-control nzErrorTip="Las contraseñas no coinciden">
           <nz-input-group nzPrefixIcon="lock" class="password-input">
-            <input  class="ant-input" nz-input [type]="confirmPasswordVisible ? 'text' : 'password'" formControlName="confirmPassword" placeholder="Confirmar contraseña" autocomplete="new-password" />
+            <input  nz-input [type]="confirmPasswordVisible ? 'text' : 'password'" formControlName="confirmPassword" placeholder="Confirmar contraseña" autocomplete="new-password" />
             <i nz-icon [nzType]="confirmPasswordVisible ? 'eye-invisible' : 'eye'" nzSuffix (click)="confirmPasswordVisible = !confirmPasswordVisible" class="password-toggle icon-set"></i>
           </nz-input-group>
         </nz-form-control>

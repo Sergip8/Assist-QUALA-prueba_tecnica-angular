@@ -123,12 +123,17 @@ export class AdminDashboardComponent {
   dashboardData!: DashboardData
 
   constructor(private dashboardService: DashboardService){
-    dashboardService.getDashboardData().subscribe(data => this.dashboardData = data)
+    
   }
 
   ngOnInit(): void {
-    this.initializeCharts();
-    this.updateMainStats();
+   this.dashboardService.getDashboardData().subscribe({
+      next: data => {
+        this.dashboardData = data.data
+        this.initializeCharts();
+        this.updateMainStats();
+      }
+    })
   }
 
   private initializeCharts(): void {
@@ -138,7 +143,7 @@ export class AdminDashboardComponent {
   }
 
   private setupMonedasChart(): void {
-    const monedasConDatos = this.dashboardData.data.distribucionMonedas
+    const monedasConDatos = this.dashboardData?.distribucionMonedas
       .filter(moneda => moneda.cantidadSucursales > 0);
     
     this.monedasChartData = {
@@ -158,7 +163,7 @@ export class AdminDashboardComponent {
   }
 
   private setupRolesChart(): void {
-    const roles = this.dashboardData.data.distribucionRoles;
+    const roles = this.dashboardData.distribucionRoles;
     
     this.rolesChartData = {
       labels: roles.map(r => r.rol),
@@ -174,7 +179,7 @@ export class AdminDashboardComponent {
   }
 
   private setupSistemaChart(): void {
-    const sistema = this.dashboardData.data.estadoSistema;
+    const sistema = this.dashboardData.estadoSistema;
     
     this.sistemaChartData = {
       labels: sistema.map(s => s.categoria),
@@ -190,9 +195,9 @@ export class AdminDashboardComponent {
   }
 
   private updateMainStats(): void {
-    const metrics = this.dashboardData.data.metrics;
-    const avgSalud = this.dashboardData.data.estadoSistema
-      .reduce((sum, s) => sum + s.porcentajeSalud, 0) / this.dashboardData.data.estadoSistema.length;
+    const metrics = this.dashboardData.metrics;
+    const avgSalud = this.dashboardData.estadoSistema
+      .reduce((sum, s) => sum + s.porcentajeSalud, 0) / this.dashboardData.estadoSistema.length;
 
     this.mainStats = [
       { 

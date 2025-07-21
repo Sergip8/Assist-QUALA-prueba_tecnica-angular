@@ -1,220 +1,219 @@
-<div class="dashboard-container">
-  <!-- Header -->
-  <nz-page-header class="site-page-header" [nzGhost]="false">
-    <nz-page-header-title>Dashboard Ejecutivo</nz-page-header-title>
-    <nz-page-header-subtitle>
-      Última actualización: {{ dashboardData.data.metrics.fechaGeneracionReporte | date:'dd/MM/yyyy HH:mm:ss' }}
-    </nz-page-header-subtitle>
-    <nz-page-header-extra>
-      <nz-button-group>
-        <button nz-button nzType="primary" nzShape="circle" (click)="refreshData()" nz-tooltip="Actualizar datos">
-          <span nz-icon nzType="reload"></span>
-        </button>
-      </nz-button-group>
-    </nz-page-header-extra>
-  </nz-page-header>
-
-  <!-- Estadísticas Principales -->
-  <div nz-row [nzGutter]="[16, 16]" class="main-stats">
-    <div nz-col [nzSpan]="6" *ngFor="let stat of mainStats">
-      <nz-card class="stat-card" [ngClass]="'stat-card-' + stat.color">
-        <div class="stat-content">
-          <div class="stat-icon">
-            <span nz-icon [nzType]="stat.icon" nzTheme="outline"></span>
-          </div>
-          <div class="stat-details">
-            <div class="stat-value">{{ stat.value }}</div>
-            <div class="stat-title">{{ stat.title }}</div>
-          </div>
-        </div>
-      </nz-card>
-    </div>
-  </div>
-
-  <!-- Gráficos Principales -->
-  <div nz-row [nzGutter]="[16, 16]" class="charts-section">
-    <!-- Gráfico de Distribución de Monedas -->
-    <div nz-col [nzSpan]="12">
-      <nz-card nzTitle="Distribución de Monedas" class="chart-card">
-        <div class="chart-container">
-          <canvas 
-            baseChart
-            [data]="monedasChartData"
-            [type]="pieChartType"
-            [options]="monedasChartOptions"
-            width="400"
-            height="300">
-          </canvas>
-        </div>
-      </nz-card>
-    </div>
-
-    <!-- Gráfico de Distribución de Roles -->
-    <div nz-col [nzSpan]="12">
-      <nz-card nzTitle="Distribución de Roles" class="chart-card">
-        <div class="chart-container">
-          <canvas 
-            baseChart
-            [data]="rolesChartData"
-            [type]="doughnutChartType"
-            [options]="rolesChartOptions"
-            width="400"
-            height="300">
-          </canvas>
-        </div>
-      </nz-card>
-    </div>
-  </div>
-
-  <!-- Estado del Sistema -->
-  <div nz-row [nzGutter]="[16, 16]" class="system-section">
-    <div nz-col [nzSpan]="16">
-      <nz-card nzTitle="Estado de Salud del Sistema" class="chart-card">
-        <div class="chart-container">
-          <canvas 
-            baseChart
-            [data]="sistemaChartData"
-            [type]="barChartType"
-            [options]="sistemaChartOptions"
-            width="600"
-            height="300">
-          </canvas>
-        </div>
-      </nz-card>
-    </div>
-
-    <!-- Información del Sistema -->
-    <div nz-col [nzSpan]="8">
-      <nz-card nzTitle="Información del Sistema" class="info-card">
-        <div class="system-info">
-          <div class="info-item" *ngFor="let item of dashboardData.data.estadoSistema">
-            <div class="info-header">
-              <span class="info-category">{{ item.categoria }}</span>
-              <nz-tag [nzColor]="item.estado === 'Operativo' || item.estado === 'Conectada' ? 'success' : 'error'">
-                {{ item.estado }}
-              </nz-tag>
+@if(dashboardData){
+  <div class="dashboard-container">
+    <!-- Header -->
+    <nz-page-header class="site-page-header" [nzGhost]="false">
+      <nz-page-header-title>Dashboard Ejecutivo</nz-page-header-title>
+      <nz-page-header-subtitle>
+        Última actualización: {{ dashboardData.metrics.fechaGeneracionReporte | date:'dd/MM/yyyy HH:mm:ss' }}
+      </nz-page-header-subtitle>
+      <nz-page-header-extra>
+        <nz-button-group>
+          <button nz-button nzType="primary" nzShape="circle" (click)="refreshData()" nz-tooltip="Actualizar datos">
+            <span nz-icon nzType="reload"></span>
+          </button>
+        </nz-button-group>
+      </nz-page-header-extra>
+    </nz-page-header>
+  
+    <!-- Estadísticas Principales -->
+    <div nz-row [nzGutter]="[16, 16]" class="main-stats">
+      <div nz-col [nzSpan]="6" *ngFor="let stat of mainStats">
+        <nz-card class="stat-card" [ngClass]="'stat-card-' + stat.color">
+          <div class="stat-content">
+            <div class="stat-icon">
+              <span nz-icon [nzType]="stat.icon" nzTheme="outline"></span>
             </div>
-            <div class="info-details">
-              <nz-progress 
-                [nzPercent]="item.porcentajeSalud" 
-                [nzStatus]="item.porcentajeSalud >= 99 ? 'success' : item.porcentajeSalud >= 95 ? 'active' : 'exception'"
-                nzSize="small">
-              </nz-progress>
-              <div class="last-check">
-                Última verificación: {{ item.ultimaVerificacion | date:'HH:mm:ss' }}
+            <div class="stat-details">
+              <div class="stat-value">{{ stat.value }}</div>
+              <div class="stat-title">{{ stat.title }}</div>
+            </div>
+          </div>
+        </nz-card>
+      </div>
+    </div>
+  
+    <!-- Gráficos Principales -->
+    <div nz-row [nzGutter]="[16, 16]" class="charts-section">
+      <!-- Gráfico de Distribución de Monedas -->
+      <div nz-col [nzSpan]="12">
+        <nz-card nzTitle="Distribución de Monedas" class="chart-card">
+          <div class="chart-container">
+            <canvas 
+              baseChart
+              [data]="monedasChartData"
+              [type]="pieChartType"
+              [options]="monedasChartOptions"
+              width="400"
+              height="300">
+            </canvas>
+          </div>
+        </nz-card>
+      </div>
+  
+      <!-- Gráfico de Distribución de Roles -->
+      <div nz-col [nzSpan]="12">
+        <nz-card nzTitle="Distribución de Roles" class="chart-card">
+          <div class="chart-container">
+            <canvas 
+              baseChart
+              [data]="rolesChartData"
+              [type]="doughnutChartType"
+              [options]="rolesChartOptions"
+              width="400"
+              height="300">
+            </canvas>
+          </div>
+        </nz-card>
+      </div>
+    </div>
+  
+    <!-- Estado del Sistema -->
+    <div nz-row [nzGutter]="[16, 16]" class="system-section">
+      <div nz-col [nzSpan]="16">
+        <nz-card nzTitle="Estado de Salud del Sistema" class="chart-card">
+          <div class="chart-container">
+            <canvas 
+              baseChart
+              [data]="sistemaChartData"
+              [type]="barChartType"
+              [options]="sistemaChartOptions"
+              width="600"
+              height="300">
+            </canvas>
+          </div>
+        </nz-card>
+      </div>
+  
+      <!-- Información del Sistema -->
+      <div nz-col [nzSpan]="8">
+        <nz-card nzTitle="Información del Sistema" class="info-card">
+          <div class="system-info">
+            <div class="info-item" *ngFor="let item of dashboardData.estadoSistema">
+              <div class="info-header">
+                <span class="info-category">{{ item.categoria }}</span>
+                <nz-tag [nzColor]="item.estado === 'Operativo' || item.estado === 'Conectada' ? 'success' : 'error'">
+                  {{ item.estado }}
+                </nz-tag>
+              </div>
+              <div class="info-details">
+                <nz-progress 
+                  [nzPercent]="item.porcentajeSalud" 
+                  [nzStatus]="item.porcentajeSalud >= 99 ? 'success' : item.porcentajeSalud >= 95 ? 'active' : 'exception'"
+                  nzSize="small">
+                </nz-progress>
+                <div class="last-check">
+                  Última verificación: {{ item.ultimaVerificacion | date:'HH:mm:ss' }}
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </nz-card>
+        </nz-card>
+      </div>
+    </div>
+  
+    <!-- Tablas de Datos Recientes -->
+    <div nz-row [nzGutter]="[16, 16]" class="tables-section">
+      <!-- Distribución Detallada de Monedas -->
+      <div nz-col [nzSpan]="12">
+        <nz-card nzTitle="Detalle de Monedas" class="table-card">
+          <nz-table 
+            #monedasTable 
+            [nzData]="dashboardData.distribucionMonedas" 
+            nzSize="small"
+            [nzShowPagination]="false">
+            <thead>
+              <tr>
+                <th>Moneda</th>
+                <th>Símbolo</th>
+                <th>Sucursales</th>
+                <th>Porcentaje</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let moneda of monedasTable.data">
+                <td>{{ moneda.nombreMoneda }}</td>
+                <td>
+                  <nz-tag [nzColor]="moneda.cantidadSucursales > 0 ? 'blue' : 'default'">
+                    {{ moneda.simboloMoneda }}
+                  </nz-tag>
+                </td>
+                <td>{{ moneda.cantidadSucursales }}</td>
+                <td>
+                  <div class="percentage-cell">
+                    {{ moneda.porcentajeDistribucion }}%
+                    <nz-progress 
+                      [nzPercent]="moneda.porcentajeDistribucion" 
+                      nzSize="small" 
+                      [nzShowInfo]="false"
+                      [nzStrokeColor]="moneda.cantidadSucursales > 0 ? '#007bff' : '#f0f0f0'">
+                    </nz-progress>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </nz-table>
+        </nz-card>
+      </div>
+  
+      <!-- Distribución Detallada de Roles -->
+      <div nz-col [nzSpan]="12">
+        <nz-card nzTitle="Detalle de Roles" class="table-card">
+          <nz-table 
+            #rolesTable 
+            [nzData]="dashboardData.distribucionRoles" 
+            nzSize="small"
+            [nzShowPagination]="false">
+            <thead>
+              <tr>
+                <th>Rol</th>
+                <th>Total</th>
+                <th>Activos</th>
+                <th>Inactivos</th>
+                <th>Porcentaje</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let rol of rolesTable.data">
+                <td>
+                  <nz-tag [nzColor]="rol.rol === 'Admin' ? 'red' : rol.rol === 'Manager' ? 'blue' : 'green'">
+                    {{ rol.rol }}
+                  </nz-tag>
+                </td>
+                <td>{{ rol.cantidadUsuarios }}</td>
+                <td>
+                  <span class="success-text">{{ rol.usuariosActivos }}</span>
+                </td>
+                <td>
+                  <span class="danger-text">{{ rol.usuariosInactivos }}</span>
+                </td>
+                <td>{{ rol.porcentajeDistribucion }}%</td>
+              </tr>
+            </tbody>
+          </nz-table>
+        </nz-card>
+      </div>
+    </div>
+  
+    <!-- Información del Período de Reporte -->
+    <div nz-row [nzGutter]="[16, 16]" class="report-info">
+      <div nz-col [nzSpan]="24">
+        <nz-card class="info-footer">
+          <div class="report-details">
+            <nz-descriptions nzTitle="Información del Reporte" [nzColumn]="4" nzSize="small">
+              <nz-descriptions-item nzTitle="Período de Reporte">
+                {{ dashboardData.metrics.fechaInicioReporte | date:'dd/MM/yyyy' }} - 
+                {{ dashboardData.metrics.fechaFinReporte | date:'dd/MM/yyyy' }}
+              </nz-descriptions-item>
+              <nz-descriptions-item nzTitle="Fecha de Generación">
+                {{ dashboardData.metrics.fechaGeneracionReporte | date:'dd/MM/yyyy HH:mm:ss' }}
+              </nz-descriptions-item>
+            
+              
+            </nz-descriptions>
+          </div>
+        </nz-card>
+      </div>
     </div>
   </div>
 
-  <!-- Tablas de Datos Recientes -->
-  <div nz-row [nzGutter]="[16, 16]" class="tables-section">
-    <!-- Distribución Detallada de Monedas -->
-    <div nz-col [nzSpan]="12">
-      <nz-card nzTitle="Detalle de Monedas" class="table-card">
-        <nz-table 
-          #monedasTable 
-          [nzData]="dashboardData.data.distribucionMonedas" 
-          nzSize="small"
-          [nzShowPagination]="false">
-          <thead>
-            <tr>
-              <th>Moneda</th>
-              <th>Símbolo</th>
-              <th>Sucursales</th>
-              <th>Porcentaje</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let moneda of monedasTable.data">
-              <td>{{ moneda.nombreMoneda }}</td>
-              <td>
-                <nz-tag [nzColor]="moneda.cantidadSucursales > 0 ? 'blue' : 'default'">
-                  {{ moneda.simboloMoneda }}
-                </nz-tag>
-              </td>
-              <td>{{ moneda.cantidadSucursales }}</td>
-              <td>
-                <div class="percentage-cell">
-                  {{ moneda.porcentajeDistribucion }}%
-                  <nz-progress 
-                    [nzPercent]="moneda.porcentajeDistribucion" 
-                    nzSize="small" 
-                    [nzShowInfo]="false"
-                    [nzStrokeColor]="moneda.cantidadSucursales > 0 ? '#007bff' : '#f0f0f0'">
-                  </nz-progress>
-                </div>
-              </td>
-            </tr>
-          </tbody>
-        </nz-table>
-      </nz-card>
-    </div>
-
-    <!-- Distribución Detallada de Roles -->
-    <div nz-col [nzSpan]="12">
-      <nz-card nzTitle="Detalle de Roles" class="table-card">
-        <nz-table 
-          #rolesTable 
-          [nzData]="dashboardData.data.distribucionRoles" 
-          nzSize="small"
-          [nzShowPagination]="false">
-          <thead>
-            <tr>
-              <th>Rol</th>
-              <th>Total</th>
-              <th>Activos</th>
-              <th>Inactivos</th>
-              <th>Porcentaje</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let rol of rolesTable.data">
-              <td>
-                <nz-tag [nzColor]="rol.rol === 'Admin' ? 'red' : rol.rol === 'Manager' ? 'blue' : 'green'">
-                  {{ rol.rol }}
-                </nz-tag>
-              </td>
-              <td>{{ rol.cantidadUsuarios }}</td>
-              <td>
-                <span class="success-text">{{ rol.usuariosActivos }}</span>
-              </td>
-              <td>
-                <span class="danger-text">{{ rol.usuariosInactivos }}</span>
-              </td>
-              <td>{{ rol.porcentajeDistribucion }}%</td>
-            </tr>
-          </tbody>
-        </nz-table>
-      </nz-card>
-    </div>
-  </div>
-
-  <!-- Información del Período de Reporte -->
-  <div nz-row [nzGutter]="[16, 16]" class="report-info">
-    <div nz-col [nzSpan]="24">
-      <nz-card class="info-footer">
-        <div class="report-details">
-          <nz-descriptions nzTitle="Información del Reporte" [nzColumn]="4" nzSize="small">
-            <nz-descriptions-item nzTitle="Período de Reporte">
-              {{ dashboardData.data.metrics.fechaInicioReporte | date:'dd/MM/yyyy' }} - 
-              {{ dashboardData.data.metrics.fechaFinReporte | date:'dd/MM/yyyy' }}
-            </nz-descriptions-item>
-            <nz-descriptions-item nzTitle="Fecha de Generación">
-              {{ dashboardData.data.metrics.fechaGeneracionReporte | date:'dd/MM/yyyy HH:mm:ss' }}
-            </nz-descriptions-item>
-            <nz-descriptions-item nzTitle="Estado">
-              <nz-tag nzColor="success">{{ dashboardData.type }}</nz-tag>
-            </nz-descriptions-item>
-            <nz-descriptions-item nzTitle="Código de Estado">
-              {{ dashboardData.statusCode }}
-            </nz-descriptions-item>
-          </nz-descriptions>
-        </div>
-      </nz-card>
-    </div>
-  </div>
-</div>
+}
